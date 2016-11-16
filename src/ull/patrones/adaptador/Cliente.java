@@ -1,7 +1,11 @@
 package ull.patrones.adaptador;
 
 import java.util.ArrayList;
-
+/**
+ * 
+ * @author Orlandy Ariel Sánchez A.
+ *
+ */
 public class Cliente
 {
 	public static void main(String[] args)

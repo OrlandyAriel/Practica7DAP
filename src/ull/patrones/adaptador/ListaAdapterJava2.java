@@ -5,7 +5,11 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 import java.util.ListIterator;
-
+/**
+ * 
+ * @author Orlandy Ariel Sánchez A.
+ *
+ */
 public class ListaAdapterJava2 implements List<Integer>
 {
 	private IArray m_array;

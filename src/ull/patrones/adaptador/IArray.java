@@ -1,5 +1,9 @@
 package ull.patrones.adaptador;
-
+/**
+ * 
+ * @author Clase aportada por el "cliente"
+ *
+ */
 public interface IArray {
 	public void anadir(int valor);
 	public void eliminar (int posicion);

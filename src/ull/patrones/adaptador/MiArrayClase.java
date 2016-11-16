@@ -1,5 +1,9 @@
 package ull.patrones.adaptador;
-
+/**
+ * 
+ * @author Clase aportada por el "cliente"
+ *
+ */
 public class MiArrayClase implements IArray {
 	private int[] v;
 	private int tam;
