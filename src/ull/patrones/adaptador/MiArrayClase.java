@@ -3,7 +3,6 @@ package ull.patrones.adaptador;
 public class MiArrayClase implements IArray {
 	private int[] v;
 	private int tam;
-	
 	public MiArrayClase(){
 		v = new  int [100];
 		vaciar();
@@ -29,7 +28,6 @@ public class MiArrayClase implements IArray {
 		}
 		tam=0;
 	}
-
 	@Override
 	public boolean esVacio() {
 		if(tam==0)
@@ -40,7 +38,6 @@ public class MiArrayClase implements IArray {
 			return false;
 		}
 	}
-
 	@Override
 	public int tamano() {
 		return tam;
@@ -55,7 +52,6 @@ public class MiArrayClase implements IArray {
 	public int ultimo() {
 		return v[tam-1];
 	}
-
 	@Override
 	public int devolverPosicion(int posicion) {
 		return v[posicion];
