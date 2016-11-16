@@ -1,6 +1,7 @@
 # Práctica 7 DAP
 
 #Orlandy Ariel Sánchez A.
+###Supuesto
 Una empresa quiere eliminar todos los usos de un código propio con arrays que se hacen en diferentes implementaciones y utilizar a partir de ahora siempre la clase Lista de java. Sin embargo, existe un gran número de proyectos que utilizan este código por lo que no es viable actualizarlos todos. Sin embargo, quieren contar con alguna propuesta que les permita olvidarse de la existencia de esta implementación desfasada y puedan unificar la utilización de la clase Lista.
 Proponga una solución para este problema. A continuación se le proporciona  el código que se pretende actualizar.
 
