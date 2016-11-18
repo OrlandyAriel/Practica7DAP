@@ -37,15 +37,24 @@ public class ListaAdapterJava implements List<Integer>
 	 */
 	private void anade(int index, Integer element)
 	{
-		ArrayList<Integer>t_arrayList = new ArrayList<>();
+		ArrayList<Integer>t_arrayList =obtenerArrayListDeIArray();
 		
+		t_arrayList.add(index, element);
+		m_array.vaciar();
+		remplazaArray(t_arrayList);
+	}
+	/**
+	 * Método para transformar IArray a ArrayList
+	 * @return, devuelve una copia del IArray convertida en ArrayList
+	 */
+	private ArrayList<Integer> obtenerArrayListDeIArray()
+	{
+		ArrayList<Integer>t_arrayList = new ArrayList<>();
 		for (int i = 0; i < m_array.tamano(); i++)
 		{
 			t_arrayList.add(m_array.devolverPosicion(i));
 		}
-		t_arrayList.add(index, element);
-		
-		remplazaArray(t_arrayList);
+		return t_arrayList;
 	}
 	/**
 	 * Reemplaza los elementos de IArray por una lista
@@ -53,23 +62,30 @@ public class ListaAdapterJava implements List<Integer>
 	 */
 	private void remplazaArray(List<Integer> a_list)
 	{
-		m_array.vaciar();
-		
 		for (int i = 0; i <a_list.size() ; i++)
 		{
 			m_array.anadir(a_list.get(i));
 		}
 	}
 	@Override
-	public boolean addAll(Collection<? extends Integer> c)//mirar 
+	public boolean addAll(Collection<? extends Integer> c)
 	{
-		return false;
+		ArrayList<Integer> t_array = (ArrayList<Integer>) c;
+		int tam = m_array.tamano();
+		remplazaArray(t_array);
+		return aCambiado(tam, m_array.tamano());
 	}
 
 	@Override
 	public boolean addAll(int index, Collection<? extends Integer> c)//mirar 
 	{
-		return false;
+		ArrayList<Integer> t_array = obtenerArrayListDeIArray();
+		int tam=m_array.tamano();
+		t_array.addAll(index,c);
+		
+		m_array.vaciar();
+		remplazaArray(t_array);
+		return aCambiado(tam, m_array.tamano());
 	}
 
 	@Override
@@ -95,9 +111,15 @@ public class ListaAdapterJava implements List<Integer>
 	}
 
 	@Override
-	public boolean containsAll(Collection<?> c)//mirar 
+	public boolean containsAll(Collection<?> c)
 	{
-		return false;
+		ArrayList<Integer> t_array = (ArrayList<Integer>) c;
+		boolean t_result = false;
+		for (int i = 0; i < t_array.size(); i++)
+		{
+			t_result=contains(t_array.get(i));
+		}
+		return t_result;
 	}
 
 	@Override
@@ -131,11 +153,7 @@ public class ListaAdapterJava implements List<Integer>
 	@Override
 	public Iterator<Integer> iterator()
 	{
-		ArrayList<Integer> t_arrayList = new ArrayList<>();
-		for (int i = 0; i < m_array.tamano(); i++)
-		{
-			t_arrayList.add(m_array.devolverPosicion(i));
-		}
+		ArrayList<Integer> t_arrayList = obtenerArrayListDeIArray();
 		return t_arrayList.iterator();
 	}
 
@@ -158,23 +176,14 @@ public class ListaAdapterJava implements List<Integer>
 	@Override
 	public ListIterator<Integer> listIterator()
 	{
-		ArrayList<Integer> t_arrayList = new ArrayList<>();
-		for (int i = 0; i < m_array.tamano(); i++)
-		{
-			t_arrayList.add(m_array.devolverPosicion(i));
-		}
+		ArrayList<Integer> t_arrayList =obtenerArrayListDeIArray();
 		return t_arrayList.listIterator();
 	}
 
 	@Override
 	public ListIterator<Integer> listIterator(int index)
 	{
-		ArrayList<Integer> t_arrayList = new ArrayList<>();
-		for (int i = index; i < m_array.tamano(); i++)
-		{
-			t_arrayList.add(m_array.devolverPosicion(i));
-		}
-		
+		ArrayList<Integer> t_arrayList = obtenerArrayListDeIArray();
 		return t_arrayList.listIterator();
 	}
 
@@ -204,31 +213,50 @@ public class ListaAdapterJava implements List<Integer>
 	}
 
 	@Override
-	public boolean removeAll(Collection<?> c)//mirar 
+	public boolean removeAll(Collection<?> c) 
 	{
-		return false;
+		ArrayList<Integer> t_array = (ArrayList<Integer>) c;
+		int tam = m_array.tamano();
+		for (int i = 0; i < t_array.size(); i++)
+		{
+			remove((Object)t_array.get(i));
+		}
+		
+		return aCambiado(tam, m_array.tamano());
 	}
-
-	@Override
-	public boolean retainAll(Collection<?> c)//mirar 
+	/**
+	 * Función para comprobar si ha habido cambios
+	 * @param antes, tamaño antes de ejecutar una acción
+	 * @param despues, tamaño despues de ejecutar una acción
+	 * @return
+	 */
+	private boolean aCambiado(int antes, int despues)
 	{
-		return false;
+		return (antes!=despues)?false:true;
+	}
+	@Override
+	public boolean retainAll(Collection<?> c)
+	{
+		ArrayList<Integer> t_array = (ArrayList<Integer>) c;
+		int tam = m_array.tamano();
+		for (int i = 0; i < t_array.size(); i++)
+		{
+			if(!contains((Object)t_array.get(i)))
+			{
+				remove((Object)t_array.get(i));
+			}
+		}
+		return aCambiado(tam, m_array.tamano());
 	}
 
 	@Override
 	public Integer set(int index, Integer element)
 	{
-		int [] t_arr = new int [m_array.tamano()];
-		for (int i = 0; i < m_array.tamano(); i++)
-		{
-			t_arr[i] = m_array.devolverPosicion(i);
-		}
+		ArrayList<Integer> t_arr = obtenerArrayListDeIArray();
+		t_arr.set(index, element);
 		m_array.vaciar();
-		t_arr[index] = element;
-		for (int i = 0; i < t_arr.length; i++)
-		{
-			m_array.anadir(t_arr[i]);
-		}
+		
+		remplazaArray(t_arr);
 		return element;
 	}
 
@@ -252,10 +280,19 @@ public class ListaAdapterJava implements List<Integer>
 	@Override
 	public Object[] toArray()
 	{
-		Object [] t_obj = new Object[m_array.tamano()];
-		for (int i = 0; i < m_array.tamano(); i++)
+		return toArrayPrivado(obtenerArrayListDeIArray().toArray());
+	}
+	/**
+	 * Método para obtener un array apartir de uno pasado por parámetro
+	 * @param a
+	 * @return
+	 */
+	private Object[] toArrayPrivado(Object[] a)
+	{
+		Object [] t_obj = new Object[a.length];
+		for (int i = 0; i < a.length; i++)
 		{
-			t_obj[i] = m_array.devolverPosicion(i);
+			t_obj[i] = a[i];
 		}
 		return t_obj;
 	}
@@ -263,7 +300,8 @@ public class ListaAdapterJava implements List<Integer>
 	@Override
 	public <T> T[] toArray(T[] a)//mirar 
 	{
-		return null;
+		return obtenerArrayListDeIArray().toArray(a);
+		
 	}
 	@Override
 	public String toString()

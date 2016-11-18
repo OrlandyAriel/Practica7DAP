@@ -1,6 +1,7 @@
 package ull.patrones.adaptador;
 
 import java.util.ArrayList;
+import java.util.Collection;
 /**
  * 
  * @author Orlandy Ariel Sánchez A.
@@ -18,9 +19,17 @@ public class Cliente
 		}
 		ListaAdapterJava adapta = new ListaAdapterJava(array);
 		System.out.println("Muestra que se convierte: "+adapta);
+		ArrayList<Integer > b = new ArrayList<>();
+		for (int i = 0; i < 3; i++)
+		{
+			b.add(77);
+		}
+		adapta.addAll(2, b);
+		System.out.println("----------"+adapta+"--------------");
+		System.err.println(adapta.containsAll(b));;
 		
 		Object [] arrayTo = adapta.toArray();
-		System.err.print("\ntoArray: [");
+		System.err.print("\n--------------------toArray: [");
 		for (int i = 0; i < arrayTo.length; i++)
 		{
 			System.err.print( ", "+arrayTo[i]);
